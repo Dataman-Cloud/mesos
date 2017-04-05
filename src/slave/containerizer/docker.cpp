@@ -358,6 +358,14 @@ DockerContainerizerProcess::Container::create(
     ContainerInfo::DockerInfo dockerInfo;
     dockerInfo.set_image(flags.docker_mesos_image.get());
 
+    Parameter* pidParameter = dockerInfo.add_parameters();
+    pidParameter ->set_key("pid");
+    pidParameter->set_value("host");
+
+    Parameter* privilegedParameter = dockerInfo.add_parameters();
+    privilegedParameter->set_key("privileged");
+    privilegedParameter->set_value("true");
+
     newContainerInfo.mutable_docker()->CopyFrom(dockerInfo);
 
     // NOTE: We do not set the optional `taskEnvironment` here as
